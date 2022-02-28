@@ -53,10 +53,6 @@ router.post('/add', async function (req, res, next) {
 
   const scan = new Scan();
 
-  scan.user = user;
-  scan.room = room;
-  scan.scannedAt = new Date();
-
   let lastScan = await Scan.findOne({ user: user })
     .sort({ scannedAt: -1 })
     .populate('room')
@@ -80,6 +76,9 @@ router.post('/add', async function (req, res, next) {
     lastScan = await forgottenScan.save();
   }
 
+  scan.user = user;
+  scan.room = room;
+  scan.scannedAt = new Date();
   scan.isEntry = !lastScan || !lastScan.isEntry;
 
   const savedScan = await scan.save();
