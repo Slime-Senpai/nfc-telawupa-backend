@@ -17,6 +17,7 @@ router.post('/', function (req, res, next) {
   }
 
   if (!req.body.name || !req.body.cardId) {
+    console.log('Bad Request: name:' + req.body.name + ', cardId: ' + req.body.cardId);
     return res.status(400).json(HTTPMessages.BadRequest);
   }
 
