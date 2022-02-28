@@ -21,9 +21,6 @@ const options = {
 
 const uri = process.env.DBURI || 'mongodb://localhost/telawupa';
 
-console.log(uri);
-console.log('Salut');
-
 mongoose.connect(uri, options).then(() => {
   console.log('Mongoose started on URI' + uri);
 },
