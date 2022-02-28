@@ -8,7 +8,7 @@ const RoomSchema = Schema({
   },
   cardId: {
     type: String,
-    required: false
+    required: true
   }
 });
 

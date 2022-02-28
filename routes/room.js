@@ -16,13 +16,14 @@ router.post('/', function (req, res, next) {
     return res.status(401).json(HTTPMessages.Unauthorized);
   }
 
-  if (!req.body.name) {
+  if (!req.body.name || !req.body.cardId) {
     return res.status(400).json(HTTPMessages.BadRequest);
   }
 
   const room = new Room();
 
   room.name = req.body.name;
+  room.cardId = req.body.cardId;
 
   const savedRoom = room.save();
 
