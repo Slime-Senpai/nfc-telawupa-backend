@@ -35,11 +35,11 @@ router.get('/:id', async function (req, res, next) {
 });
 
 router.post('/add', async function (req, res, next) {
-  if (!req.body.token || !req.body.cardId) {
+  if (!req.body.id || !req.body.cardId) {
     return res.status(400).json(HTTPMessages.BadRequest);
   }
 
-  const user = await User.findOne({ token: req.body.token }).lean().exec();
+  const user = await User.findOne({ _id: req.body.id }).lean().exec();
 
   if (!user) {
     return res.status(404).json(HTTPMessages.UserNotFound);
