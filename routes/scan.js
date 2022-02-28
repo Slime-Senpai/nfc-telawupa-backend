@@ -67,7 +67,7 @@ router.post('/add', async function (req, res, next) {
     lastScan &&
     lastScan.isEntry &&
     lastScan.room &&
-    lastScan.room._id !== room._id
+    lastScan.room.cardId !== room.cardId
   ) {
     const forgottenScan = new Scan();
 
