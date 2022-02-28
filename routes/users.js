@@ -66,12 +66,12 @@ router.post('/login', async function (req, res, next) {
   res.status(200).json({ name: user.name, id: user._id });
 });
 
-router.get('/user/:id/scans', async function (req, res, next) {
+router.get('/:id/scans', async function (req, res, next) {
   if (!req.params.id) {
     return res.status(400).json(HTTPMessages.BadRequest);
   }
 
-  const user = await User.findOne({ _id: req.params.id }).lean().exec();
+  const user = await User.findById(req.params.id).lean().exec();
 
   if (!user) {
     return res.status(400).json(HTTPMessages.BadRequest);
