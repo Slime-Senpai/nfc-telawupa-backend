@@ -12,7 +12,7 @@ const ScanSchema = Schema({
     ref: 'Room',
     required: true
   },
-  date: {
+  scannedAt: {
     type: Date,
     required: true
   },

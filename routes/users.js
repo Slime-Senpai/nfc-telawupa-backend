@@ -84,7 +84,11 @@ router.get('/user/:token/scans', async function (req, res, next) {
     return res.status(400).json(HTTPMessages.BadRequest);
   }
 
-  const scans = await Scan.find({ user: user }).populate('user').populate('room').lean().exec();
+  const scans = await Scan.find({ user: user })
+    .populate('user', { name: 1 })
+    .populate('room', { name: 1 })
+    .lean()
+    .exec();
 
   if (!scans || scans.length === 0) {
     return res.status(400).json(HTTPMessages.BadRequest);

@@ -7,7 +7,11 @@ const HTTPMessages = require('../bin/httpMessages.js');
 
 /* GET users listing. */
 router.get('/', async function (req, res, next) {
-  const scans = await Scan.find().populate('user').populate('room').lean().exec();
+  const scans = await Scan.find()
+    .populate('user', { name: 1 })
+    .populate('room', { name: 1 })
+    .lean()
+    .exec();
 
   if (!scans || scans.length === 0) {
     return res.status(404).json(HTTPMessages.NotFound);
@@ -17,7 +21,11 @@ router.get('/', async function (req, res, next) {
 });
 
 router.get('/:id', async function (req, res, next) {
-  const scan = await Scan.findById(req.params.id).populate('user').populate('room').lean().exec();
+  const scan = await Scan.findById(req.params.id)
+    .populate('user', { name: 1 })
+    .populate('room', { name: 1 })
+    .lean()
+    .exec();
 
   if (!scan) {
     return res.status(404).json(HTTPMessages.NotFound);
@@ -47,23 +55,31 @@ router.post('/add', async function (req, res, next) {
 
   scan.user = user;
   scan.room = room;
-  scan.date = new Date();
+  scan.scannedAt = new Date();
 
-  let lastScan = await Scan.findOne({ user: user }).sort({ date: -1 }).lean().exec();
+  let lastScan = await Scan.findOne({ user: user })
+    .sort({ scannedAt: -1 })
+    .lean()
+    .exec();
 
   // Is the last scan is an entry and we changed room, we forgot to scan the exit
-  if (lastScan && lastScan.isEntry && lastScan.room && lastScan.room._id !== room._id) {
+  if (
+    lastScan &&
+    lastScan.isEntry &&
+    lastScan.room &&
+    lastScan.room._id !== room._id
+  ) {
     const forgottenScan = new Scan();
 
     forgottenScan.user = user;
     forgottenScan.room = lastScan.room;
-    forgottenScan.date = new Date();
+    forgottenScan.scannedAt = new Date();
     forgottenScan.isEntry = false;
 
     lastScan = await forgottenScan.save();
   }
 
-  scan.isEntry = (!lastScan || !lastScan.isEntry);
+  scan.isEntry = !lastScan || !lastScan.isEntry;
 
   const savedScan = await scan.save();
 
