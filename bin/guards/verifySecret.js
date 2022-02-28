@@ -1,3 +1,5 @@
 module.exports = (secret) => {
-  return secret === process.env.SECRET;
+  const isSecretVerified = secret !== undefined && secret === process.env.SECRET;
+  console.log('Secret verified: ' + isSecretVerified);
+  return isSecretVerified;
 };
