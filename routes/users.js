@@ -84,7 +84,7 @@ router.get('/:id/scans', async function (req, res, next) {
     .exec();
 
   if (!scans || scans.length === 0) {
-    return res.status(400).json(HTTPMessages.BadRequest);
+    return res.status(400).json(HTTPMessages.NotFound);
   }
 
   return res.status(200).json(scans);
