@@ -19,7 +19,7 @@ const options = {
   useUnifiedTopology: true
 };
 
-const uri = process.env.MONGOURI || 'mongodb+srv://localhost:27017/telawupa?retryWrites=true&w=majority';
+const uri = process.env.MONGOURI || 'mongodb://localhost/telawupa';
 
 mongoose.connect(uri, options).then(() => {
   console.log('Mongoose started on URI' + uri);
