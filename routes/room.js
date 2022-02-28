@@ -12,7 +12,7 @@ router.get('/', async function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-  if (!verifySecret(req.body.token)) {
+  if (!verifySecret(req.body.secret)) {
     return res.status(401).json(HTTPMessages.Unauthorized);
   }
 

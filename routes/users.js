@@ -13,7 +13,6 @@ const generateToken = () => {
   return crypto.randomBytes(48).toString('hex');
 };
 
-/* GET users listing. */
 router.post('/', function (req, res, next) {
   if (!verifySecret(req.body.secret)) {
     return res.status(401).json(HTTPMessages.Unauthorized);
