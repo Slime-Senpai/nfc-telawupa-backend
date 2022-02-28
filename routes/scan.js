@@ -59,6 +59,7 @@ router.post('/add', async function (req, res, next) {
 
   let lastScan = await Scan.findOne({ user: user })
     .sort({ scannedAt: -1 })
+    .populate('room')
     .lean()
     .exec();
 
