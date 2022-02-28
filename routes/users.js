@@ -78,6 +78,7 @@ router.get('/:id/scans', async function (req, res, next) {
   }
 
   const scans = await Scan.find({ user: user })
+    .sort({ scannedAt: 1 })
     .populate('user', { name: 1 })
     .populate('room', { name: 1 })
     .lean()
